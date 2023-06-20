@@ -78,11 +78,7 @@ function BordChange() {
 
   function click(row:number, coll:number) {
     const bordToChange = [...board];
-    if(!board.some(row => row.includes(""))){
-      setTie(true);
-      setMsg(msgTie);
-    }
-    else{
+    
       if (!isGameEnd) {
         if (board[row][coll] == "") {
           if (isXTurn) {
@@ -91,14 +87,18 @@ function BordChange() {
             isWon(row, coll, Player.X);
           } else {
             setTurn(true);
-          bordToChange[row][coll] = Player.O;
-          isWon(row, coll, Player.O);
-        }
-        setBord(bordToChange);
+            bordToChange[row][coll] = Player.O;
+            isWon(row, coll, Player.O);
+          }
+          setBord(bordToChange);
+          if(!board.some(row => row.includes(""))){
+            setTie(true);
+            setMsg(msgTie);
+          }
       }
     }
   }
-  }
+  
   return (
     <div>
       {board.map((row, i) => (<div className="container">{row.map((cell, j) => (<button onClick={() => click(i, j)}>{cell}</button>))}</div>))}
